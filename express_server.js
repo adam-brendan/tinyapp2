@@ -36,9 +36,18 @@ app.post("/urls", (req, res) => {
   res.redirect(`/urls/${shortURL}`);
 });
 
+// delete button on /urls page
 app.post("/urls/:shortURL/delete", (req, res) => {
   const shortURL = req.params.shortURL;
   delete urlDatabase[shortURL];
+  res.redirect("/urls");
+});
+
+// form on /urls/:shortURL page
+app.post("/urls/:shortURL", (req, res) => {
+  const longURL = req.body.newURL;
+  const shortURL = req.params.shortURL;
+  urlDatabase[shortURL] = longURL.includes("http") ? longURL : "http://" + longURL;
   res.redirect("/urls");
 });
 
