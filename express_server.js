@@ -31,6 +31,7 @@ app.get("/urls/new", (req, res) => {
 // from urls_new.ejs
 app.post("/urls", (req, res) => {
   const shortURL = randomString.generate(6).toString();
+  // comes from urls_new.ejs
   let longURL = req.body.longURL;
   urlDatabase[shortURL] = longURL.includes("http") ? longURL : "http://" + longURL;
   res.redirect(`/urls/${shortURL}`);
@@ -66,6 +67,13 @@ app.get("/urls/:shortURL", (req, res) => {
 // page for urls/json
 app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
+});
+
+app.post("/login", (req, res) => {
+  // const username = req.params.username;
+  // console.log("USERNAME", username)
+  res.cookie("name", "username");
+  res.redirect("/urls");
 });
 
 app.listen(PORT, () => {
